@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Net Detective Dashboard</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="header">
+        <div>
+          <h1>Net Detective Dashboard</h1>
+          <p class="subtitle">Minimal overview of targets, response time, and alerts.</p>
+        </div>
+        <div id="error" class="error" aria-live="polite"></div>
+      </header>
+
+      <section class="card">
+        <h2>Add Target</h2>
+        <form id="add-target-form" class="form">
+          <label>
+            Name
+            <input type="text" name="name" required />
+          </label>
+          <label>
+            URL
+            <input type="url" name="url" required />
+          </label>
+          <label>
+            Interval (sec)
+            <input type="number" name="interval_sec" min="1" value="60" required />
+          </label>
+          <label>
+            Timeout (sec)
+            <input type="number" name="timeout_sec" min="1" value="10" required />
+          </label>
+          <label class="checkbox">
+            <input type="checkbox" name="enabled" checked />
+            Enabled
+          </label>
+          <button type="submit">Add</button>
+        </form>
+      </section>
+
+      <section class="grid">
+        <div class="card">
+          <h2>Targets</h2>
+          <div class="table-wrapper">
+            <table id="targets-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>URL</th>
+                  <th>Status</th>
+                  <th>Status Code</th>
+                  <th>Latest Response (ms)</th>
+                  <th>DNS Time (ms)</th>
+                  <th>Last Probe</th>
+                  <th>Availability (24h)</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card">
+          <h2>Response Time (last 60 minutes)</h2>
+          <div id="chart" class="chart"></div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Alerts</h2>
+        <div class="table-wrapper">
+          <table id="alerts-table">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Target</th>
+                <th>Type</th>
+                <th>Content</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+    <script src="/static/app.js"></script>
+  </body>
+</html>
