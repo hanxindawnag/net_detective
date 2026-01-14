@@ -27,7 +27,7 @@ def dashboard_overview():
         ).fetchall()
         latest_rows = conn.execute(
             """
-            SELECT pr.target_id, pr.status_code, pr.response_time_ms, pr.error, pr.ts
+            SELECT pr.target_id, pr.status_code, pr.response_time_ms, pr.dns_time_ms, pr.error, pr.ts
             FROM probe_results pr
             INNER JOIN (
                 SELECT target_id, MAX(id) AS max_id
@@ -76,6 +76,8 @@ def dashboard_overview():
                 "enabled": bool(target["enabled"]),
                 "latest_status_code": latest["status_code"] if latest else None,
                 "latest_response_time_ms": latest["response_time_ms"] if latest else None,
+                "latest_dns_time_ms": latest["dns_time_ms"] if latest else None,
+                "latest_error": latest["error"] if latest else None,
                 "latest_ts": latest["ts"] if latest else None,
                 "availability": (success / total) if total else None,
                 "avg_response_time_ms": avg_response,
